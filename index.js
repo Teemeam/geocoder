@@ -1,46 +1,62 @@
-import axios from 'axios';
-import Papa from 'papaparse';
-import fs from 'fs';
+const fs = require('fs');
+const axios = require('axios');
+const Papa = require('papaparse');
+const proj4 = require('proj4');
+require('dotenv').config();
 
-const inputFilename = 'places.csv';
-const outputFilename = 'geocodedPlaces.csv';
+const filePath = 'places.csv'; // Path to CSV file
 
-const baseUrl = 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v2/pelias/search';
-const apiKey = '';
+const baseUrl = 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v2/pelias/search'; // Base URL for the geocoding API
+const sources = 'geographic-names'; // Data sources to use for the geocoding query
+const crs = 'EPSG:3067'; // Coordinate reference system for the input data
+const lang = 'fi'; // Language for the geocoding query
+
+// Define the coordinate systems
+proj4.defs('EPSG:3067', '+proj=utm +zone=35 +ellps=GRS80 +units=m +no_defs');
+proj4.defs('EPSG:4326', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs');
 
 const main = async () => {
-  // Load the CSV file as a string using fs module
-  const csvString = fs.readFileSync(inputFilename, 'utf-8');
+  // Read the CSV file as a string
+  const csvString = fs.readFileSync(filePath, 'utf-8');
 
-  // Parse the CSV string using PapaParse
+  // Parse the CSV data using PapaParse library
   const results = Papa.parse(csvString, { header: true }).data;
 
-  // Process each row in the CSV
+  // Define an empty array to store the output rows
   const outputRows = [];
-  for (const row of results) {
-    // Get the coordinates for the place using the Maanmittauslaitos API
-    const response = await axios.get(`${baseUrl}?text=${row.placeName}&sources=geographic-names&crs=EPSG:3067&lang=fi&api-key=${apiKey}`);
 
-    // Extract the coordinates from the API response
+  // Loop through each row in the input data
+  for (const row of results) {
+    const text = encodeURIComponent(row.placeName);
+
+    // Send a GET request to the geocoding API
+    const response = await axios.get(
+      `${baseUrl}?text=${text}&sources=${sources}&crs=${crs}&lang=${lang}&api-key=${process.env.API_KEY}`
+    );
+
+    // Extract the features from the API response
     const features = response.data.features;
+
+    // If at least one feature was found, extract its coordinates and convert them to EPSG:4326
     if (features.length > 0) {
       const coords = features[0].geometry.coordinates;
-      row.latitude = coords[1];
-      row.longitude = coords[0];
+      const [lng, lat] = proj4('EPSG:3067', 'EPSG:4326', [coords[0], coords[1]]);
+      row.lng = lng;
+      row.lat = lat;
     } else {
-      row.latitude = '';
-      row.longitude = '';
+      row.lng = '';
+      row.lat = '';
     }
 
     // Add the row to the output array
     outputRows.push(row);
   }
 
-  // Convert the output rows to CSV using PapaParse
+  // Convert the output data back to CSV format
   const outputCsv = Papa.unparse(outputRows, { header: true });
 
-  // Write the output CSV to a file
-  fs.writeFileSync(outputFilename, outputCsv);
+  // Write the output CSV data to a file
+  fs.writeFileSync(`build/${filePath}`, outputCsv);
 };
 
 main();
