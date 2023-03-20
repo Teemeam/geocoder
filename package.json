@@ -13,6 +13,7 @@
     "names": "node index.js geographic-names.csv geographic-names",
     "road-addresses": "node index.js interpolated-road-addresses.csv interpolated-road-addresses",
     "building-addresses": "node index.js addresses.csv addresses",
+    "reverse": "node reverse.js reverse.csv addresses",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

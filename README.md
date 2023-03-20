@@ -24,6 +24,10 @@ Run `npm run road-addresses` to retrieve the coordinates for each street address
 
 Run `npm run building-addresses` to retrieve the coordinates for each building address. This will read the _addresses.csv_ file and use the [Topographic database](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0) as the data source.
 
+### Reverse geocoding
+
+Run `npm run reverse` to retrieve the closest address for each coordinate (in 10 meter radius). This will read the _reverse.csv_ file.
+
 ## Response format
 
 ```json
