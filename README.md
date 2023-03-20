@@ -12,7 +12,17 @@ Log in to your My Account service: https://omatili.maanmittauslaitos.fi/user/new
 
 ## Usage
 
-Run `node index.js` to run the script.
+### Geographic names
+
+To retrieve the coordinates for each geographic location, run the command `npm run names`. This will read the _geographic-names.csv_ file and use the National Land Survey's [geographic names](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/nimisto) as the data source.
+
+### Road addresses
+
+To retrieve the coordinates for each street address, run the command `npm run road-addresses`. This will read the _interpolated-road-addresses.csv_ file and use the Population Information System's [real estate, building, and spatial information](https://dvv.fi/kiinteisto-rakennus-ja-paikkatiedot) as the data source.
+
+## Building addresses
+
+To retrieve the coordinates for each building address, run the command `npm run building-addresses`. This will read the _addresses.csv_ file and use the [Topographic database](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0) as the data source.
 
 ## Response format
 

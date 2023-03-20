@@ -4,10 +4,10 @@ const Papa = require('papaparse');
 const proj4 = require('proj4');
 require('dotenv').config();
 
-const filePath = 'places.csv'; // Path to CSV file
+const filePath = process.argv[2]; // Path to CSV file
 
 const baseUrl = 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v2/pelias/search'; // Base URL for the geocoding API
-const sources = 'geographic-names'; // Data sources to use for the geocoding query
+const sources = process.argv[3]; // Data sources to use for the geocoding query
 const crs = 'EPSG:3067'; // Coordinate reference system for the input data
 const lang = 'fi'; // Language for the geocoding query
 
@@ -17,7 +17,7 @@ proj4.defs('EPSG:4326', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs');
 
 const main = async () => {
   // Read the CSV file as a string
-  const csvString = fs.readFileSync(filePath, 'utf-8');
+  const csvString = fs.readFileSync(`input/${filePath}`, 'utf-8');
 
   // Parse the CSV data using PapaParse library
   const results = Papa.parse(csvString, { header: true }).data;
@@ -56,7 +56,7 @@ const main = async () => {
   const outputCsv = Papa.unparse(outputRows, { header: true });
 
   // Write the output CSV data to a file
-  fs.writeFileSync(`build/${filePath}`, outputCsv);
+  fs.writeFileSync(`output/${filePath}`, outputCsv);
 };
 
 main();
