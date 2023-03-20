@@ -41,11 +41,11 @@ const main = async () => {
     if (features.length > 0) {
       const coords = features[0].geometry.coordinates;
       const [lng, lat] = proj4('EPSG:3067', 'EPSG:4326', [coords[0], coords[1]]);
-      row.lng = lng;
       row.lat = lat;
+      row.lng = lng;
     } else {
-      row.lng = '';
       row.lat = '';
+      row.lng = '';
     }
 
     // Add the row to the output array
