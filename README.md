@@ -2,6 +2,20 @@
 
 Geocoder reads a CSV file containing Finnish place names, makes a request to a geocoding API to retrieve the latitude and longitude coordinates for each place and writes the results back to a new CSV file.
 
+## Table of Contents
+
+1. [Requirements](#requirements)
+2. [Usage](#usage)
+    1. [Geocoding](#geocoding)
+        1. [Geographic names](#geographic-names)
+        2. [Road addresses](#road-addresses)
+        3. [Building addresses](#building-addresses)
+    2. [Reverse geocoding](#reverse-geocoding)
+        1. [Building addresses](#building-addresses-1)
+3. [Response format](#response-format)
+    1. [Geocoding](#geocoding-1)
+    2. [Reverse geocoding](#reverse-geocoding-1)
+
 ## Requirements
 
 Here is the link to the technical description of the geocoding API v2 of the National Land Survey of Finland: https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/ammattilaiskayttajille/paikkatietojen-rajapintapalvelut/geokoodauspalvelu
@@ -12,21 +26,25 @@ Log in to your My Account service: https://omatili.maanmittauslaitos.fi/user/new
 
 ## Usage
 
-### Geographic names
+### Geocoding
+
+#### Geographic names
 
 Run `npm run names` to retrieve the coordinates for each geographic location. This will read the _geographic-names.csv_ file and use the National Land Survey's [geographic names](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/nimisto) as the data source.
 
-### Road addresses
+#### Road addresses
 
-Run `npm run road-addresses` to retrieve the coordinates for each street address. This will read the _interpolated-road-addresses.csv_ file and use the Population Information System's [real estate, building, and spatial information](https://dvv.fi/kiinteisto-rakennus-ja-paikkatiedot) as the data source.
+Run `npm run road-addresses` to retrieve the coordinates for each road address. This will read the _interpolated-road-addresses.csv_ file and use the Population Information System's [real estate, building, and spatial information](https://dvv.fi/kiinteisto-rakennus-ja-paikkatiedot) as the data source.
 
-### Building addresses
+#### Building addresses
 
 Run `npm run building-addresses` to retrieve the coordinates for each building address. This will read the _addresses.csv_ file and use the [Topographic database](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0) as the data source.
 
 ### Reverse geocoding
 
-Run `npm run reverse` to retrieve the closest address for each coordinate (in 10 meter radius). This will read the _reverse.csv_ file.
+#### Building addresses
+
+Run `npm run reverse` to retrieve the closest building address for each coordinate (in 10 meter radius). This will read the _reverse.csv_ file.
 
 ## Response format
 
