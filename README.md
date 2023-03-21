@@ -26,6 +26,14 @@ Log in to your My Account service: https://omatili.maanmittauslaitos.fi/user/new
 
 ## Usage
 
+Run `npm install` to install dependencies.
+
+Create a _.env_ file in the project's root folder and store your API key in that file:
+
+```
+API_KEY=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+```
+
 ### Geocoding
 
 #### Geographic names
