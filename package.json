@@ -10,10 +10,10 @@
   "author": "Teemu Kakko",
   "main": "index.js",
   "scripts": {
-    "names": "node index.js geographic-names.csv geographic-names",
-    "road-addresses": "node index.js interpolated-road-addresses.csv interpolated-road-addresses",
-    "building-addresses": "node index.js addresses.csv addresses",
-    "reverse": "node reverse.js reverse.csv addresses",
+    "names": "node index.js geographic-names.csv geographic-names geocode",
+    "road-addresses": "node index.js interpolated-road-addresses.csv interpolated-road-addresses geocode",
+    "building-addresses": "node index.js addresses.csv addresses geocode",
+    "reverse": "node index.js reverse.csv addresses reverse",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
